@@ -1,1 +1,32 @@
 @import "tailwindcss";
+
+@font-face {
+    font-family: 'AnkhSanctuary';
+    src: url('./fonts/AnkhSanctuary-PVK0B.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'CrotahFreeVersionItalic';
+    src: url('./fonts/CrotahFreeVersionItalic-z8Ev3.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'PlaywriteDKLoopet';
+    src: url('./fonts/PlaywriteDKLoopet-VariableFont_wght.ttf');
+}
+
+/* Define color variables */
+:root {
+    --primary-blue: #0052CC;
+    --secondary-coral: #FF6F61;
+    --background-light: #F7F7F7;
+    --accent-green: #4CAF50;
+    --text-dark: #333333;
+    --header-footer-navy: #003366;
+    --cta-yellow: #FFB700;
+}
+
+body {
+    background-color: var(--background-light);
+    color: var(--text-dark);
+}
