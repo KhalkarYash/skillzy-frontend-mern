@@ -9,7 +9,6 @@ const Homepage = () => {
 
   return courses ? (
     <div className="flex flex-col justify-center items-center pb-20 mt-20">
-      {console.log(courses)}
       <div className="w-[90%] rounded-lg h-[30vh] bg-gradient-to-b from-[var(--secondary-coral)] to-white"></div>
       <div>
         <div className="italic text-8xl sm:text-8xl font-[AnkhSanctuary] text-[var(--primary-blue)]">
