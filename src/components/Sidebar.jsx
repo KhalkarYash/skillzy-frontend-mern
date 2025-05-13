@@ -1,9 +1,33 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaHome, FaBook, FaGlobe, FaSignInAlt } from "react-icons/fa";
 import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { removeUser } from "../utils/userSlice";
+import axios from "axios";
+import { BASE_URL } from "../utils/constants";
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const user = useSelector((store) => store.user);
+
+  const handleLogout = async () => {
+    try {
+      await axios.post(
+        `${BASE_URL}/${user.role}/logout`,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+      dispatch(removeUser());
+      setIsOpen(false);
+      navigate("/auth");
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -19,7 +43,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
       <aside
         className={`
           fixed left-0 top-[56px] h-[calc(100vh-56px)]
-          ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+          ${isOpen ? "translate-x-0" : "-translate-x-full"}
           transition-transform duration-300 ease-in-out
           w-64 bg-white shadow-sm
           z-40
@@ -59,16 +83,32 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
             </li>
           </ul>
 
-          <div className="border-t pt-4">
-            <Link
-              to="/auth"
-              className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 text-gray-700"
-              onClick={() => setIsOpen(false)}
-            >
-              <FaSignInAlt className="text-xl text-[var(--primary-blue)]" />
-              <span>Sign In / Sign Up</span>
-            </Link>
-          </div>
+          {!user && (
+            <div className="border-t pt-4">
+              <Link
+                to="/auth"
+                className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 text-gray-700"
+                onClick={() => setIsOpen(false)}
+              >
+                <FaSignInAlt className="text-xl text-[var(--primary-blue)]" />
+                <span>Sign In / Sign Up</span>
+              </Link>
+            </div>
+          )}
+          {user && (
+            <div className="border-t pt-4">
+              <button
+                to="/auth"
+                className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 text-gray-700"
+                onClick={() => {
+                  handleLogout();
+                }}
+              >
+                <FaSignInAlt className="text-xl text-[var(--primary-blue)]" />
+                <span>Signout</span>
+              </button>
+            </div>
+          )}
         </nav>
       </aside>
 
