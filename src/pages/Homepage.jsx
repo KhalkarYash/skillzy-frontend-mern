@@ -8,8 +8,21 @@ const Homepage = () => {
   return courses ? (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
       {/* Hero Section */}
-      <div className="relative h-[60vh] bg-gradient-to-r from-[var(--primary-blue)] to-blue-600 overflow-hidden">
-        <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
+      <div className="relative h-[60vh] overflow-hidden bg-[#0066cc]">
+        <div className="absolute inset-0" style={{
+          background: `
+            radial-gradient(circle at 20% 35%, rgba(76, 169, 255, 0.13) 0%, rgba(76, 169, 255, 0) 25%),
+            radial-gradient(circle at 75% 65%, rgba(21, 128, 255, 0.13) 0%, rgba(21, 128, 255, 0) 25%),
+            linear-gradient(135deg, #0066cc 0%, #1a75ff 100%)
+          `
+        }}></div>
+        <div className="absolute inset-0 opacity-30"
+          style={{
+            backgroundImage: `
+              repeating-linear-gradient(45deg, transparent 0, transparent 2px, rgba(255,255,255,0.1) 2px, rgba(255,255,255,0.1) 4px)
+            `
+          }}
+        ></div>
         <div className="absolute inset-0 flex flex-col items-center justify-center text-white p-4">
           <h1 className="italic text-6xl sm:text-8xl font-[AnkhSanctuary] mb-4 text-center">
             Skillzy
