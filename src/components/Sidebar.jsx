@@ -1,10 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
-import { FaHome, FaBook, FaGlobe, FaSignInAlt } from "react-icons/fa";
+import { FaHome, FaBook, FaGlobe, FaSignInAlt, FaPlus } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { removeUser } from "../utils/userSlice";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
+import { removeCourses } from "../utils/myCourseSlice";
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -22,6 +23,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         }
       );
       dispatch(removeUser());
+      dispatch(removeCourses());
       setIsOpen(false);
       navigate("/auth");
     } catch (error) {
@@ -58,19 +60,25 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                 onClick={() => setIsOpen(false)}
               >
                 <FaHome className="text-xl text-[var(--primary-blue)] group-hover:scale-110 transition-transform" />
-                <span className="group-hover:text-[var(--primary-blue)]">Home</span>
+                <span className="group-hover:text-[var(--primary-blue)]">
+                  Home
+                </span>
               </Link>
             </li>
-            <li>
-              <Link
-                to="/my-courses"
-                className="flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50 text-gray-700 transition-all duration-200 group"
-                onClick={() => setIsOpen(false)}
-              >
-                <FaBook className="text-xl text-[var(--primary-blue)] group-hover:scale-110 transition-transform" />
-                <span className="group-hover:text-[var(--primary-blue)]">My Courses</span>
-              </Link>
-            </li>
+            {user?.role === "user" && (
+              <li>
+                <Link
+                  to="/my-courses"
+                  className="flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50 text-gray-700 transition-all duration-200 group"
+                  onClick={() => setIsOpen(false)}
+                >
+                  <FaBook className="text-xl text-[var(--primary-blue)] group-hover:scale-110 transition-transform" />
+                  <span className="group-hover:text-[var(--primary-blue)]">
+                    My Courses
+                  </span>
+                </Link>
+              </li>
+            )}
             <li>
               <Link
                 to="/courses"
@@ -78,9 +86,25 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                 onClick={() => setIsOpen(false)}
               >
                 <FaGlobe className="text-xl text-[var(--primary-blue)] group-hover:scale-110 transition-transform" />
-                <span className="group-hover:text-[var(--primary-blue)]">All Courses</span>
+                <span className="group-hover:text-[var(--primary-blue)]">
+                  All Courses
+                </span>
               </Link>
             </li>
+            {user?.role === "admin" && (
+              <li>
+                <Link
+                  to="/add-course"
+                  className="flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50 text-gray-700 transition-all duration-200 group"
+                  onClick={() => setIsOpen(false)}
+                >
+                  <FaPlus className="text-xl text-[var(--primary-blue)] group-hover:scale-110 transition-transform" />
+                  <span className="group-hover:text-[var(--primary-blue)]">
+                    Add Course
+                  </span>
+                </Link>
+              </li>
+            )}
           </ul>
 
           {!user ? (
@@ -91,7 +115,9 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                 onClick={() => setIsOpen(false)}
               >
                 <FaSignInAlt className="text-xl text-[var(--primary-blue)] group-hover:scale-110 transition-transform" />
-                <span className="group-hover:text-[var(--primary-blue)]">Sign In / Sign Up</span>
+                <span className="group-hover:text-[var(--primary-blue)]">
+                  Sign In / Sign Up
+                </span>
               </Link>
             </div>
           ) : (

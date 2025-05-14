@@ -2,22 +2,28 @@ import { useState, useEffect } from "react";
 import MyCourseCard from "../components/MyCourseCard";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { FaBookOpen } from "react-icons/fa"; // Add this import
+import { addCourses } from "../utils/myCourseSlice";
 
 const MyCourses = () => {
   const user = useSelector((store) => store.user);
   const [myCourses, setMyCourses] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch();
 
   const getMyCourses = async () => {
     try {
       setIsLoading(true);
-      const res = await axios.get(`${BASE_URL}/${user.role}/my-courses`, {
-        withCredentials: true,
-      });
-      setMyCourses(res.data.courses);
+      let res;
+      if (user.role === "user") {
+        res = await axios.get(`${BASE_URL}/user/my-courses`, {
+          withCredentials: true,
+        });
+        setMyCourses(res.data.courses);
+        dispatch(addCourses(myCourses));
+      }
     } catch (error) {
       console.error(error);
     } finally {
