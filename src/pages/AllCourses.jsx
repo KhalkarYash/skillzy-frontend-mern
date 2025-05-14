@@ -16,21 +16,29 @@ const AllCourses = () => {
   }, []);
 
   return (
-    <div className="mt-8 mx-4">
-      <h1 className="font-bold text-3xl text-center mb-5">Top Courses</h1>
-      <div className="flex flex-col justify-center sm:flex-row flex-wrap gap-10">
-        {courses.map((course) => {
-          const { _id, title, author, imageLink } = course;
-          return (
-            <Link key={title + " " + author} to={"/course/" + _id}>
-              <CourseHomeCard
-                title={title}
-                author={author}
-                imageLink={imageLink}
-              />
-            </Link>
-          );
-        })}
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white py-12 px-4">
+      <div className="max-w-7xl mx-auto">
+        <h1 className="font-bold text-4xl text-[var(--primary-blue)] text-center mb-12">
+          Explore Our Courses
+        </h1>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {courses.map((course) => {
+            const { _id, title, author, imageLink } = course;
+            return (
+              <Link 
+                key={title + " " + author} 
+                to={"/course/" + _id}
+                className="transform hover:scale-105 transition-transform duration-300"
+              >
+                <CourseHomeCard
+                  title={title}
+                  author={author}
+                  imageLink={imageLink}
+                />
+              </Link>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

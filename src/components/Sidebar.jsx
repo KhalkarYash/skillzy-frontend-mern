@@ -44,8 +44,8 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         className={`
           fixed left-0 top-[56px] h-[calc(100vh-56px)]
           ${isOpen ? "translate-x-0" : "-translate-x-full"}
-          transition-transform duration-300 ease-in-out
-          w-64 bg-white shadow-sm
+          transition-all duration-300 ease-in-out
+          w-64 bg-white shadow-lg
           z-40
         `}
       >
@@ -54,58 +54,54 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
             <li>
               <Link
                 to="/"
-                className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 text-gray-700"
+                className="flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50 text-gray-700 transition-all duration-200 group"
                 onClick={() => setIsOpen(false)}
               >
-                <FaHome className="text-xl text-[var(--primary-blue)]" />
-                <span>Home</span>
+                <FaHome className="text-xl text-[var(--primary-blue)] group-hover:scale-110 transition-transform" />
+                <span className="group-hover:text-[var(--primary-blue)]">Home</span>
               </Link>
             </li>
             <li>
               <Link
                 to="/my-courses"
-                className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 text-gray-700"
+                className="flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50 text-gray-700 transition-all duration-200 group"
                 onClick={() => setIsOpen(false)}
               >
-                <FaBook className="text-xl text-[var(--primary-blue)]" />
-                <span>My Courses</span>
+                <FaBook className="text-xl text-[var(--primary-blue)] group-hover:scale-110 transition-transform" />
+                <span className="group-hover:text-[var(--primary-blue)]">My Courses</span>
               </Link>
             </li>
             <li>
               <Link
                 to="/courses"
-                className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 text-gray-700"
+                className="flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50 text-gray-700 transition-all duration-200 group"
                 onClick={() => setIsOpen(false)}
               >
-                <FaGlobe className="text-xl text-[var(--primary-blue)]" />
-                <span>All Courses</span>
+                <FaGlobe className="text-xl text-[var(--primary-blue)] group-hover:scale-110 transition-transform" />
+                <span className="group-hover:text-[var(--primary-blue)]">All Courses</span>
               </Link>
             </li>
           </ul>
 
-          {!user && (
+          {!user ? (
             <div className="border-t pt-4">
               <Link
                 to="/auth"
-                className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 text-gray-700"
+                className="flex items-center gap-3 p-3 rounded-lg hover:bg-blue-50 text-gray-700 transition-all duration-200 group"
                 onClick={() => setIsOpen(false)}
               >
-                <FaSignInAlt className="text-xl text-[var(--primary-blue)]" />
-                <span>Sign In / Sign Up</span>
+                <FaSignInAlt className="text-xl text-[var(--primary-blue)] group-hover:scale-110 transition-transform" />
+                <span className="group-hover:text-[var(--primary-blue)]">Sign In / Sign Up</span>
               </Link>
             </div>
-          )}
-          {user && (
+          ) : (
             <div className="border-t pt-4">
               <button
-                to="/auth"
-                className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 text-gray-700"
-                onClick={() => {
-                  handleLogout();
-                }}
+                className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-red-50 text-gray-700 transition-all duration-200 group"
+                onClick={handleLogout}
               >
-                <FaSignInAlt className="text-xl text-[var(--primary-blue)]" />
-                <span>Signout</span>
+                <FaSignInAlt className="text-xl text-red-500 group-hover:scale-110 transition-transform" />
+                <span className="group-hover:text-red-500">Sign Out</span>
               </button>
             </div>
           )}
@@ -115,7 +111,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
       {/* Overlay for mobile */}
       {isOpen && isMobile && (
         <div
-          className="fixed inset-0 bg-black/20 z-30 md:hidden"
+          className="fixed inset-0 bg-black/20 backdrop-blur-sm z-30 transition-opacity duration-300"
           onClick={() => setIsOpen(false)}
         />
       )}
